@@ -9,6 +9,14 @@ import {
 import { AxiosRequestor } from "./AxiosService";
 
 const { App } = Plugins;
+/* an example open id connect provider */
+const openIdConnectUrl = "https://accounts.google.com";
+
+/* example client configuration */
+const clientId =
+    "511828570984-7nmej36h9j2tebiqmpqh835naet4vci4.apps.googleusercontent.com";
+const redirectUri = "http://127.0.0.1:8000";
+const scope = "openid userinfo";
 
 export class Auth {
   private static authService: AuthService | undefined;
@@ -20,15 +28,15 @@ export class Auth {
       new AxiosRequestor()
     );
     authService.authConfig = {
-      client_id: "appauth",
-      server_host: "http://localhost:5200",
+      client_id:clientId,
+      server_host: openIdConnectUrl,
       redirect_url: isPlatform("capacitor")
         ? "com.appauth.demo://callback"
         : window.location.origin + "/loginredirect",
       end_session_redirect_url: isPlatform("capacitor")
         ? "com.appauth.demo://endSession"
         : window.location.origin + "/endredirect",
-      scopes: "openid offline_access",
+      scopes: scope,
       pkce: true
     };
 
