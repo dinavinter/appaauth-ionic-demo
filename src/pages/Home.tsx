@@ -93,11 +93,9 @@ const Home: React.FC<HomePageProps> = (props: HomePageProps) => {
                 <IonButton onClick={handleGetUserDetails}>Get User Details</IonButton>
                 <IonButton onClick={handleRefresh}>Refresh Token</IonButton>
                 <IonButton onClick={handleSignOut}>Sign Out</IonButton>
-        
+
                 <IonGrid>
-
-
-                    <IonRow>
+                    <IonCol>
                         <IonHeader>
                             <IonToolbar>
                                 <IonButtons slot="start">
@@ -107,19 +105,22 @@ const Home: React.FC<HomePageProps> = (props: HomePageProps) => {
                                         </IonButton>
                                     </IonMenuToggle>
                                 </IonButtons>
-                                <IonTitle>Configuration</IonTitle>
+                                <IonTitle>Tracer</IonTitle>
                             </IonToolbar>
                         </IonHeader>
-                        <IonCol>
-                            <JsonCard title={"Provider Configuration"} data={providerConfiguration}/>
-                        </IonCol>
-                        <IonCol>
-                            <JsonCard title={"Client Configuration"} data={clientConfiguration}/>
-                        </IonCol>
-                    </IonRow>
 
+                        <IonList>
+                            {history.map(action =>
+                                <IonItem>
+                                    <JsonCard data={action} title={action.action}/>
 
-                    <IonRow>
+                                </IonItem>
+                            )}
+                        </IonList>
+
+                    </IonCol>
+                    <IonCol>
+                        <IonRow>
                             <IonHeader>
                                 <IonToolbar>
                                     <IonButtons slot="start">
@@ -129,50 +130,66 @@ const Home: React.FC<HomePageProps> = (props: HomePageProps) => {
                                             </IonButton>
                                         </IonMenuToggle>
                                     </IonButtons>
-                                    <IonTitle>Tracer</IonTitle>
+                                    <IonTitle>Provider Configuration</IonTitle>
                                 </IonToolbar>
                             </IonHeader>
-  
-                            <IonList>
-                                {history.map(action =>
-                                    <JsonCard data={action} title={action.action}/>
-                                )}
-                            </IonList>
-                    </IonRow>
-                    <IonRow>
-                        <IonHeader>
-                            <IonToolbar>
-                                <IonButtons slot="start">
-                                    <IonMenuToggle>
-                                        <IonButton>
-                                            <IonIcon slot="icon-only" icon={menu}/>
-                                        </IonButton>
-                                    </IonMenuToggle>
-                                </IonButtons>
-                                <IonTitle>User Info</IonTitle>
-                            </IonToolbar>
-                            
-                        </IonHeader>
-                        <JsonCard data={user} title={"User Info"}/>
-                    </IonRow>
+                            <IonCol>
+                                <JsonCard title={"Provider Configuration"} data={providerConfiguration}/>
+                            </IonCol>
 
-                    <IonRow>
-                        <IonHeader>
-                            <IonToolbar>
-                                <IonButtons slot="start">
-                                    <IonMenuToggle>
-                                        <IonButton>
-                                            <IonIcon slot="icon-only" icon={menu}/>
-                                        </IonButton>
-                                    </IonMenuToggle>
-                                </IonButtons>
-                                <IonTitle>Session Info</IonTitle>
-                            </IonToolbar>
+                        </IonRow>
+                        <IonRow>
+                            <IonHeader>
+                                <IonToolbar>
+                                    <IonButtons slot="start">
+                                        <IonMenuToggle>
+                                            <IonButton>
+                                                <IonIcon slot="icon-only" icon={menu}/>
+                                            </IonButton>
+                                        </IonMenuToggle>
+                                    </IonButtons>
+                                    <IonTitle>Client Configuration</IonTitle>
+                                </IonToolbar>
+                            </IonHeader>
 
-                        </IonHeader>
-                        <JsonCard data={session} title={"Session Details"}/>
-                    </IonRow>
+                            <IonCol>
+                                <JsonCard title={"Client Configuration"} data={clientConfiguration}/>
+                            </IonCol>
+                        </IonRow>
+                        <IonRow>
+                            <IonHeader>
+                                <IonToolbar>
+                                    <IonButtons slot="start">
+                                        <IonMenuToggle>
+                                            <IonButton>
+                                                <IonIcon slot="icon-only" icon={menu}/>
+                                            </IonButton>
+                                        </IonMenuToggle>
+                                    </IonButtons>
+                                    <IonTitle>User Info</IonTitle>
+                                </IonToolbar>
 
+                            </IonHeader>
+                            <JsonCard data={user} title={"User Info"}/>
+                        </IonRow>
+
+                        <IonRow>
+                            <IonHeader>
+                                <IonToolbar>
+                                    <IonButtons slot="start">
+                                        <IonMenuToggle>
+                                            <IonButton>
+                                                <IonIcon slot="icon-only" icon={menu}/>
+                                            </IonButton>
+                                        </IonMenuToggle>
+                                    </IonButtons>
+                                    <IonTitle>Session Info</IonTitle>
+                                </IonToolbar>
+
+                            </IonHeader>
+                            <JsonCard data={session} title={"Session Details"}/>
+                        </IonRow>
+                    </IonCol>
 
                     {/*<JsonCard title={"Provider Configuration"}   data={providerConfiguration} />*/}
                     {/*<JsonCard title={"Client Configuration"}   data={clientConfiguration} />*/}
