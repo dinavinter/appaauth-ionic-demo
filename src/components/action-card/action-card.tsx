@@ -1,5 +1,6 @@
 import React from 'react';
 import { IonCard, IonCardHeader, IonCardContent } from '@ionic/react';
+import {JsonView} from "../json-card";
 
 export const ActionCard = (props : any) => {
 
@@ -7,7 +8,7 @@ export const ActionCard = (props : any) => {
         <IonCard>
             <IonCardHeader>Action Data</IonCardHeader>
             <IonCardContent>
-                {JSON.stringify(props.action) }
+                <JsonView  data={props.action} /> 
             </IonCardContent>
         </IonCard>
     );

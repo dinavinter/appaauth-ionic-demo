@@ -1,6 +1,6 @@
 {
-  "appId": "com.appauth.demo",
-  "appName": "CapReactDemo",
+  "appId": "com.appauth.doth",
+  "appName": "DothReactDemo",
   "bundledWebRuntime": false,
   "npmClient": "npm",
   "webDir": "build",

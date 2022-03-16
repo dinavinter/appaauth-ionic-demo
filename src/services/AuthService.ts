@@ -1,41 +1,79 @@
 import { isPlatform } from "@ionic/react";
 import { Plugins } from "@capacitor/core";
-import { ConsoleLogObserver, AuthService } from "ionic-appauth";
+import {ConsoleLogObserver, AuthService, EndSessionRequest, Browser} from "ionic-appauth";
 import {
   CapacitorBrowser,
   CapacitorSecureStorage
 } from "ionic-appauth/lib/capacitor";
+import { AuthorizationServiceConfiguration, StringMap, BasicQueryStringUtils } from "@openid/appauth";
 
 import { AxiosRequestor } from "./AxiosService";
+import {Requestor, StorageBackend} from "@openid/appauth";
 
 const { App } = Plugins;
 /* an example open id connect provider */
 const openIdConnectUrl = "https://accounts.google.com";
 
 /* example client configuration */
+const clientIdDe =
+    "837888262468-p7a2590eh7vld598n016ul350r80rtvu.apps.googleusercontent.com";
 const clientId =
     "511828570984-7nmej36h9j2tebiqmpqh835naet4vci4.apps.googleusercontent.com";
 const redirectUri = "http://127.0.0.1:8000";
-const scope = "openid userinfo";
+const redirectPath = "loginredirect";
+const scope = "openid email profile";
+const access_type= "offline";
+
+
+
+
+export interface EndSessionHandler {
+  performEndSessionRequest(configuration: AuthorizationServiceConfiguration, request : EndSessionRequest): Promise<string | undefined>;
+}
+
+export class NooopEndSessionHandler implements EndSessionHandler {
+
+  _storage:StorageBackend
+  constructor(storage:StorageBackend
+
+  ) {
+    this._storage = storage;}
+
+  public async performEndSessionRequest(configuration: AuthorizationServiceConfiguration, request : EndSessionRequest): Promise<string | undefined> {
+  
+    return Promise.resolve(request.postLogoutRedirectURI);
+   }
+ 
+}
+class AuthServiceWithoutEndSession extends AuthService{
+ constructor(...args:any) {
+   super(...args);
+
+   this.endSessionHandler=new NooopEndSessionHandler( this.storage);
+   
+  
+ }
+
+} 
 
 export class Auth {
   private static authService: AuthService | undefined;
 
   private static buildAuthInstance() {
-    const authService = new AuthService(
+    const authService = new AuthServiceWithoutEndSession(
       new CapacitorBrowser(),
       new CapacitorSecureStorage(),
       new AxiosRequestor()
     );
     authService.authConfig = {
-      client_id:clientId,
+      client_id:clientIdDe,
       server_host: openIdConnectUrl,
       redirect_url: isPlatform("capacitor")
-        ? "com.appauth.demo://callback"
-        : window.location.origin + "/loginredirect",
+        ? "com.appauth.doth://callback"
+        :   `${window.location.origin}/${redirectPath}`,
       end_session_redirect_url: isPlatform("capacitor")
-        ? "com.appauth.demo://endSession"
-        : window.location.origin + "/endredirect",
+        ? "com.appauth.doth://endSession" 
+        : `${window.location.origin}/endredirect`,
       scopes: scope,
       pkce: true
     };
@@ -52,6 +90,7 @@ export class Auth {
     }
 
     authService.addActionObserver(new ConsoleLogObserver());
+   
     return authService;
   }
 

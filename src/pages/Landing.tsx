@@ -44,6 +44,7 @@ const Landing : React.FC<LandingPageProps> = (props: LandingPageProps) => {
             <IonContent>
                 <IonButton onClick={handleSignIn}>Sign In</IonButton>
                 <ActionCard action={action}></ActionCard>
+                
             </IonContent>
         </IonPage>
     ); 

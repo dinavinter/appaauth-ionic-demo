@@ -23,6 +23,7 @@
     "ionicons": "^5.0.0",
     "react": "^16.13.0",
     "react-dom": "^16.13.0",
+    "react-json-view": "^1.21.3",
     "react-router": "^5.1.2",
     "react-router-dom": "^5.1.2",
     "react-scripts": "^3.4.3",
@@ -33,8 +34,8 @@
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
+    "predeploy": "npm run build -o build",
     "deploy": "gh-pages -d build"
-
   },
   "eslintConfig": {
     "extends": "react-app"

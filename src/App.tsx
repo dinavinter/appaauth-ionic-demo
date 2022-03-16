@@ -26,16 +26,23 @@ import '@ionic/react/css/display.css';
 
 /* Theme variables */
 import './theme/variables.css';
+import {TabsExample} from "./components/cards/tabs";
+import Cards from "./components/cards/Cards";
 
 const App: React.FC = () => (
   <IonApp>
     <IonReactRouter>
+      {/*<TabsExample/>*/}
+    
       <IonRouterOutlet>
+        
         <Route path="/landing" component={Landing} exact />
         <PrivateRoute path="/home" component={Home} exact />
+        {/*<PrivateRoute path="/cards" component={Cards} exact />*/}
         <Route path="/loginredirect" component={LoginRedirect} exact />
         <Route path="/endredirect" component={EndRedirect} exact />
         <Route exact path="/" render={() => <Redirect to="/landing" />} />
+        {/*<Route exact path="/app" component={ TabsExample} />*/}
       </IonRouterOutlet>
     </IonReactRouter>
   </IonApp>

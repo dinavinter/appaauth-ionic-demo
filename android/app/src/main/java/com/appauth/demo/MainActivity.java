@@ -1,4 +1,4 @@
-package com.appauth.demo;
+package com.appauth.doth;
 
 import android.os.Bundle;
 
